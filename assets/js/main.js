@@ -23,10 +23,12 @@ var displayWeather = function (event) {
     } else {
       alert("Please enter a City");
     }
+    localSave()
+    recentSearchHistory(city);
   };
 
 var displayPreviousSearch = function(event){
-    var city = event.target.getAttribute("previousCityData")
+    var city = event.target.getAttribute("previous-city-data")
     if(city){
         searchedCity(city);
         fiveDayForecast(city);
@@ -167,12 +169,12 @@ var FiveDayForecastInfo = function (weather) {
 };
 
 // recent searched city table
-var pastSearch = function(displayPreviousSearch){
+var recentSearchHistory = function(recentSearch){
 
     searchPreviousCity = document.createElement("button");
-    searchPreviousCity.textContent = displayPreviousSearch;
+    searchPreviousCity.textContent = recentSearch;
     searchPreviousCity.classList = "d-flex border";
-    searchPreviousCity.setAttribute("previousCityData",displayPreviousSearch)
+    searchPreviousCity.setAttribute("previous-city-data",recentSearch)
     searchPreviousCity.setAttribute("type", "submit");
     previousCity.prepend(searchPreviousCity);
 }
