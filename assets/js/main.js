@@ -43,6 +43,7 @@ var searchCityFiveDayForecast = function (city) {
 };
 
 
+
 // Functions to append search results for city user searched
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
@@ -50,7 +51,7 @@ var searchCityWeather = function (weather, citySearch) {
 
   var todaysDate = document.createElement("span");
   todaysDate.textContent =
-    " (" + moment(weather.dt.value).format('MMMM Do YYYY, h:mm:ss a') + ") ";
+    " (" + moment(weather.dt.value).format("MMMM Do YYYY, h:mm:ss a") + ") ";
   searchedCity.appendChild(todaysDate);
 
   var cityWeatherIcon = document.createElement("img");
@@ -74,6 +75,10 @@ var searchCityWeather = function (weather, citySearch) {
   cityWindSpeed.textContent = "Wind Speed: " + weather.wind.speed + " MPH";
   cityWindSpeed.classList = "list-group-item";
   searchedCityContainer.appendChild(cityWindSpeed);
+
+  var lat = weather.coord.lat;
+  var lon = weather.coord.lon;
+  searchCityUvIndex(lat, lon);
 };
 
 var searchedCityUvIndex = function (uvIndex) {
