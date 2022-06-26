@@ -7,7 +7,7 @@ var searchedCity = document.querySelector(".searchedCity");
 var fiveDayForecastInfo = document.querySelector(".fiveDayForecastInfo");
 var fiveDayContainer = document.querySelector(".fiveDayContainer");
 
-var previousCity = document.querySelector(".previousCity");
+var previousCity = document.querySelector(".searchHistory");
 
 var cityArr = [];
 
