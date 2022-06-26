@@ -9,39 +9,48 @@ var fiveDayContainer = document.querySelector(".fiveDayContainer");
 
 var cityArr = [];
 
+// API fetch functions
+var geoCallFetch = function (city) {
+  var apiKey = "23350d22c5f5ffb342616e39dd758278";
+  var geoCall = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
 
-var geoCallFetch = function(city){
-    var apiKey = "23350d22c5f5ffb342616e39dd758278"
-    var geoCall = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
-
-    fetch(geoCall)
-    .then(function(response){
-        response.json().then(function(data){
-            searchCityWeather(data, city);
-        });
+  fetch(geoCall).then(function (response) {
+    response.json().then(function (data) {
+      searchCityWeather(data, city);
     });
+  });
 };
-
 
 // to be used to get UV index?
-var searchCityUvIndex = function(lat,lon){
-    var apiKey = "23350d22c5f5ffb342616e39dd758278"
-    var geoLatLonCall = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`
-    fetch(geoLatLonCall)
-    .then(function(response){
-        response.json().then(function(data){
-            searchedCityUvIndex(data)
-        });
+var searchCityUvIndex = function (lat, lon) {
+  var apiKey = "23350d22c5f5ffb342616e39dd758278";
+  var geoLatLonCall = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
+  fetch(geoLatLonCall).then(function (response) {
+    response.json().then(function (data) {
+      searchedCityUvIndex(data);
     });
+  });
+};
+
+var searchCityFiveDayForecast = function (city) {
+  var apiKey = "23350d22c5f5ffb342616e39dd758278";
+  var geoFiveDayForecastCall = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+  fetch(geoFiveDayForecastCall).then(function (response) {
+    response.json().then(function (data) {
+      console.log(data);
+    });
+  });
 };
 
 
+// Functions to append search results for city user searched
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
   searchedCity.textContent = citySearch;
 
   var todaysDate = document.createElement("span");
-  todaysDate.textContent = " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
+  todaysDate.textContent =
+    " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
   searchedCity.appendChild(todaysDate);
 
   var cityWeatherIcon = document.createElement("img");
@@ -67,39 +76,42 @@ var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.appendChild(cityWindSpeed);
 };
 
+var searchedCityUvIndex = function (uvIndex) {
+  var cityUvIndex = document.createElement("div");
+  cityUvIndex.textContent = "Uv Index: ";
+  cityUvIndex.classList = "list-group-item";
 
-var searchedCityUvIndex = function(uvIndex){
-    var cityUvIndex = document.createElement("div");
-    cityUvIndex.textContent = "Uv Index: "
-    cityUvIndex.classList = "list-group-item"
+  cityUvIndexValue = document.createElement("span");
+  cityUvIndexValue.textContent = uvIndex.value;
 
-    cityUvIndexValue = document.createElement("span")
-    cityUvIndexValue.textContent = uvIndex.value
+  if (uvIndex.value <= 2) {
+    cityUvIndexValue.classList = "favorable";
+  } else if (uvIndex.value > 2 && uvIndex.value <= 8) {
+    cityUvIndexValue.classList = "moderate ";
+  } else if (uvIndex.value > 8) {
+    cityUvIndexValue.classList = "severe";
+  }
 
-    if(uvIndex.value <=2){
-        cityUvIndexValue.classList = "favorable"
-    }else if(uvIndex.value >2 && uvIndex.value<=8){
-        cityUvIndexValue.classList = "moderate "
-    }
-    else if(uvIndex.value >8){
-        cityUvIndexValue.classList = "severe"
-    };
+  cityUvIndex.appendChild(cityUvIndexValue);
+  searchedCityContainer.appendChild(cityUvIndex);
+};
 
-    cityUvIndex.appendChild(cityUvIndexValue);
-    searchedCityContainer.appendChild(cityUvIndex);
-}
-
-
-var displayWeather = function(event){
-    event.preventDefault();
-    var city = searchCityInput.value.trim();
-    if(city){
-        geoCallFetch(city);
-        cityArr.unshift({city});
-        searchCityInput.value = "";
-    } else{
-        alert("Please enter a City");
-    }
+// Function that runs when city is searched by user
+var displayWeather = function (event) {
+  event.preventDefault();
+  var city = searchCityInput.value.trim();
+  if (city) {
+    geoCallFetch(city);
+    cityArr.unshift({ city });
+    searchCityInput.value = "";
+  } else {
+    alert("Please enter a City");
+  }
 };
 
 searchCityForm.addEventListener("submit", displayWeather);
+
+// append uv index to current weather div
+// local storage "recent searches"
+// make recent searches clickable
+// five day forecast
