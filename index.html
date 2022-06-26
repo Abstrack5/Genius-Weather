@@ -18,26 +18,26 @@
 
 
     <section class="container-fluid">
-        <div>
-            <div>
+        <div class="row">
+            <div class="search-column col-12 col-md-4">
                 <form class="searchCityForm">
-                    <input type="text" id="city" placeholder="City Name">
+                    <input type="text" id="city" placeholder="City Name" class="form-input">
                     <button class="btn btn-primary" type="submit">Search City</button>
                 </form>
                 <div class="searchHistory">
                     Previous searches
                 </div>
             </div>
-            <div>
-                <div>
-                    <div>
+            <div class="col-12 col-md-9">
+                <div class="">
+                    <div class="col-12">
                         <h2 class="searchedCity"></h2>
                         <div class="searchedCityContainer"></div>
                     </div>
                 </div>
                 <div class="fiveDayForecast">
-                    <h2 class="fiveDayForecastInfo">Five-Day Forecast</h2>
-                    <div class="fiveDayContainer"></div>
+                    <h2 class="fiveDayForecastInfo col-12">Five-Day Forecast</h2>
+                    <div class="fiveDayContainer d-flex"></div>
                 </div>
             </div>
         </div>

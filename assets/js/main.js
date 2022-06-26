@@ -125,17 +125,17 @@ var FiveDayForecastInfo = function (weather) {
     var dailyFiveDayForecast = fiveForecastList[i];
 
     var fiveDayForecastContainer = document.createElement("div");
-    fiveDayForecastContainer.classList = "";
+    fiveDayForecastContainer.classList = "card";
 
     var dateOfForecast = document.createElement("h4");
     dateOfForecast.textContent = moment
       .unix(dailyFiveDayForecast.dt)
       .format("MMM D, YYYY");
-    dateOfForecast.classList = "";
+    dateOfForecast.classList = "card-header text-center";
     fiveDayForecastContainer.appendChild(dateOfForecast);
 
     var fiveDayForecastWeatherIcon = document.createElement("img");
-    fiveDayForecastWeatherIcon.classList = "";
+    fiveDayForecastWeatherIcon.classList = "card-body text-center";
     fiveDayForecastWeatherIcon.setAttribute(
       "src",
       `https://openweathermap.org/img/wn/${dailyFiveDayForecast.weather[0].icon}@2x.png`
@@ -143,13 +143,13 @@ var FiveDayForecastInfo = function (weather) {
     fiveDayForecastContainer.appendChild(fiveDayForecastWeatherIcon);
 
     var fiveDayForecastTemperature = document.createElement("span");
-    fiveDayForecastTemperature.classList = "";
+    fiveDayForecastTemperature.classList = "card-body text-center";
     fiveDayForecastTemperature.textContent =
       dailyFiveDayForecast.main.temp + " °F";
     fiveDayForecastContainer.appendChild(fiveDayForecastTemperature);
 
     var fiveDayForecastHumidity = document.createElement("span");
-    fiveDayForecastHumidity.classList = "";
+    fiveDayForecastHumidity.classList = "card-body text-center";
     fiveDayForecastHumidity.textContent = dailyFiveDayForecast.main.humidity + "  %";
     fiveDayForecastContainer.appendChild(fiveDayForecastHumidity);
 
