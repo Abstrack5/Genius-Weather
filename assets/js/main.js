@@ -7,37 +7,40 @@ var searchedCity = document.querySelector(".searchedCity");
 var fiveDayForecastInfo = document.querySelector(".fiveDayForecastInfo");
 var fiveDayContainer = document.querySelector(".fiveDayContainer");
 
-var cityInputName = searchCityInput.value.trim();
 var cityArr = [];
 
-var geoCallFetch = function () {
-  var geoCall = `https://api.openweathermap.org/data/2.5/onecall?q=${city}&units=imperial&appid=${apiKey}`;
-  var apiKey = "844421298d794574c100e3409cee0499";
 
-  fetch(geoCall).then(function (response) {
-    response.json().then(function (data) {
-        searchCityWeather(data, city);
+var geoCallFetch = function(city){
+    var apiKey = "23350d22c5f5ffb342616e39dd758278"
+    var geoCall = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+
+    fetch(geoCall)
+    .then(function(response){
+        response.json().then(function(data){
+            searchCityWeather(data, city);
+        });
     });
-  });
 };
 
-var displayWeather = function (event) {
-  event.preventDefault();
-  if (city) {
-    geoCallFetch(city);
-    searchCityInput.value = "";
-  } else {
-    alert("Please enter a city name");
-  }
-};
+
+var displayWeather = function(event){
+    event.preventDefault();
+    var city = searchCityInput.value.trim();
+    if(city){
+        geoCallFetch(city);
+        cityArr.unshift({city});
+        searchCityInput.value = "";
+    } else{
+        alert("Please enter a City");
+    }
+}
 
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
   searchedCity.textContent = citySearch;
 
   var todaysDate = document.createElement("span");
-  todaysDate.textContent =
-    " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
+  todaysDate.textContent = " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
   searchedCity.appendChild(todaysDate);
 
   var cityWeatherIcon = document.createElement("img");
