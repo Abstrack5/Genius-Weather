@@ -7,6 +7,8 @@ var searchedCity = document.querySelector(".searchedCity");
 var fiveDayForecastInfo = document.querySelector(".fiveDayForecastInfo");
 var fiveDayContainer = document.querySelector(".fiveDayContainer");
 
+var previousCity = document.querySelector(".previousCity");
+
 var cityArr = [];
 
 // Function that runs when city is searched by user
@@ -23,6 +25,13 @@ var displayWeather = function (event) {
     }
   };
 
+var displayPreviousSearch = function(event){
+    var city = event.target.getAttribute("previousCityData")
+    if(city){
+        searchedCity(city);
+        fiveDayForecast(city);
+}
+}
   
 // API fetch functions
 var geoCallFetch = function (city) {
@@ -157,6 +166,17 @@ var FiveDayForecastInfo = function (weather) {
   }
 };
 
+// recent searched city table
+var pastSearch = function(displayPreviousSearch){
+
+    searchPreviousCity = document.createElement("button");
+    searchPreviousCity.textContent = displayPreviousSearch;
+    searchPreviousCity.classList = "d-flex border";
+    searchPreviousCity.setAttribute("previousCityData",displayPreviousSearch)
+    searchPreviousCity.setAttribute("type", "submit");
+    previousCity.prepend(searchPreviousCity);
+}
+
 // setup local storage
 var localSave = function(){
     localStorage.setItem("cityArr", JSON.stringify(cityArr));
@@ -164,6 +184,5 @@ var localSave = function(){
 
 // 
 searchCityForm.addEventListener("submit", displayWeather);
+previousCity.addEventListener("click", displayPreviousSearch);
 
-// local storage "recent searches"
-// make recent searches clickable
