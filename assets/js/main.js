@@ -22,6 +22,7 @@ var geoCallFetch = function(city){
     });
 };
 
+
 // to be used to get UV index?
 var searchCityUvIndex = function(lat,lon){
     var apiKey = "23350d22c5f5ffb342616e39dd758278"
@@ -29,15 +30,16 @@ var searchCityUvIndex = function(lat,lon){
     fetch(geoLatLonCall)
     .then(function(response){
         response.json().then(function(data){
-           console.log(data)
+            searchedCityUvIndex(data)
         });
     });
-    console.log(lat);
-    console.log(lon);
 };
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/js
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
   searchedCity.textContent = citySearch;
@@ -68,6 +70,29 @@ var searchCityWeather = function (weather, citySearch) {
   cityWindSpeed.classList = "list-group-item";
   searchedCityContainer.appendChild(cityWindSpeed);
 };
+
+
+var searchedCityUvIndex = function(uvIndex){
+    var cityUvIndex = document.createElement("div");
+    cityUvIndex.textContent = "Uv Index: "
+    cityUvIndex.classList = "list-group-item"
+
+    cityUvIndexValue = document.createElement("span")
+    cityUvIndexValue.textContent = uvIndex.value
+
+    if(uvIndex.value <=2){
+        cityUvIndexValue.classList = "favorable"
+    }else if(uvIndex.value >2 && uvIndex.value<=8){
+        cityUvIndexValue.classList = "moderate "
+    }
+    else if(uvIndex.value >8){
+        cityUvIndexValue.classList = "severe"
+    };
+
+    cityUvIndex.appendChild(cityUvIndexValue);
+    searchedCityContainer.appendChild(cityUvIndex);
+}
+
 
 var displayWeather = function(event){
     event.preventDefault();
