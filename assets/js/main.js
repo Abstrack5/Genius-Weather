@@ -9,6 +9,21 @@ var fiveDayContainer = document.querySelector(".fiveDayContainer");
 
 var cityArr = [];
 
+// Function that runs when city is searched by user
+var displayWeather = function (event) {
+    event.preventDefault();
+    var city = searchCityInput.value.trim();
+    if (city) {
+      geoCallFetch(city);
+      geoFiveDayForecastFetch(city);
+      cityArr.unshift({ city });
+      searchCityInput.value = "";
+    } else {
+      alert("Please enter a City");
+    }
+  };
+
+  
 // API fetch functions
 var geoCallFetch = function (city) {
   var apiKey = "23350d22c5f5ffb342616e39dd758278";
@@ -142,22 +157,13 @@ var FiveDayForecastInfo = function (weather) {
   }
 };
 
-// Function that runs when city is searched by user
-var displayWeather = function (event) {
-  event.preventDefault();
-  var city = searchCityInput.value.trim();
-  if (city) {
-    geoCallFetch(city);
-    geoFiveDayForecastFetch(city);
-    cityArr.unshift({ city });
-    searchCityInput.value = "";
-  } else {
-    alert("Please enter a City");
-  }
+// setup local storage
+var localSave = function(){
+    localStorage.setItem("cityArr", JSON.stringify(cityArr));
 };
 
+// 
 searchCityForm.addEventListener("submit", displayWeather);
 
 // local storage "recent searches"
 // make recent searches clickable
-// five day forecast - started fetch, need to work on getting info and appending.
