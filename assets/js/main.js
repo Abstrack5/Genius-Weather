@@ -60,7 +60,7 @@ var geoLatLonFetch = function (lat, lon) {
 
 var geoFiveDayForecastFetch = function (city) {
   var apiKey = "23350d22c5f5ffb342616e39dd758278";
-  var geoFiveDayForecastCall = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+  var geoFiveDayForecastCall = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
 
   fetch(geoFiveDayForecastCall).then(function (response) {
     response.json().then(function (data) {
@@ -161,7 +161,7 @@ var FiveDayForecastInfo = function (weather) {
 
     var fiveDayForecastHumidity = document.createElement("span");
     fiveDayForecastHumidity.classList = "card-body text-center";
-    fiveDayForecastHumidity.textContent = dailyFiveDayForecast.main.humidity + "  %";
+    fiveDayForecastHumidity.textContent = "Humidity: " + dailyFiveDayForecast.main.humidity + "  %";
     fiveDayForecastContainer.appendChild(fiveDayForecastHumidity);
 
     fiveDayContainer.appendChild(fiveDayForecastContainer);
@@ -170,7 +170,6 @@ var FiveDayForecastInfo = function (weather) {
 
 // recent searched city table
 var recentSearchHistory = function(recentSearch){
-
     searchPreviousCity = document.createElement("button");
     searchPreviousCity.textContent = recentSearch;
     searchPreviousCity.classList = "d-flex border";
