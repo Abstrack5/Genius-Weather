@@ -22,7 +22,7 @@ var geoCallFetch = function (city) {
 };
 
 // to be used to get UV index?
-var searchCityUvIndex = function (lat, lon) {
+var geoLatLonFetch = function (lat, lon) {
   var apiKey = "23350d22c5f5ffb342616e39dd758278";
   var geoLatLonCall = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
   fetch(geoLatLonCall).then(function (response) {
@@ -32,16 +32,16 @@ var searchCityUvIndex = function (lat, lon) {
   });
 };
 
-var searchCityFiveDayForecast = function (city) {
+var geoFiveDayForecastFetch = function (city) {
   var apiKey = "23350d22c5f5ffb342616e39dd758278";
   var geoFiveDayForecastCall = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+
   fetch(geoFiveDayForecastCall).then(function (response) {
     response.json().then(function (data) {
-      console.log(data);
+        FiveDayForecastInfo(data);
     });
   });
 };
-
 
 
 // Functions to append search results for city user searched
@@ -78,7 +78,7 @@ var searchCityWeather = function (weather, citySearch) {
 
   var lat = weather.coord.lat;
   var lon = weather.coord.lon;
-  searchCityUvIndex(lat, lon);
+  geoLatLonFetch(lat, lon);
 };
 
 var searchedCityUvIndex = function (uvIndex) {
@@ -101,12 +101,54 @@ var searchedCityUvIndex = function (uvIndex) {
   searchedCityContainer.appendChild(cityUvIndex);
 };
 
+var FiveDayForecastInfo = function (weather) {
+  fiveDayContainer.textContent = "";
+  fiveDayForecastInfo.textContent = "Five Day Forecast:";
+
+  var fiveForecastList = weather.list;
+  for (var i = 5; i < fiveForecastList.length; i = i + 8) {
+    var dailyFiveDayForecast = fiveForecastList[i];
+
+    var fiveDayForecastContainer = document.createElement("div");
+    fiveDayForecastContainer.classList = "";
+
+    var dateOfForecast = document.createElement("h4");
+    dateOfForecast.textContent = moment
+      .unix(dailyFiveDayForecast.dt)
+      .format("MMM D, YYYY");
+    dateOfForecast.classList = "";
+    fiveDayForecastContainer.appendChild(dateOfForecast);
+
+    var fiveDayForecastWeatherIcon = document.createElement("img");
+    fiveDayForecastWeatherIcon.classList = "";
+    fiveDayForecastWeatherIcon.setAttribute(
+      "src",
+      `https://openweathermap.org/img/wn/${dailyFiveDayForecast.weather[0].icon}@2x.png`
+    );
+    fiveDayForecastContainer.appendChild(fiveDayForecastWeatherIcon);
+
+    var fiveDayForecastTemperature = document.createElement("span");
+    fiveDayForecastTemperature.classList = "";
+    fiveDayForecastTemperature.textContent =
+      dailyFiveDayForecast.main.temp + " °F";
+    fiveDayForecastContainer.appendChild(fiveDayForecastTemperature);
+
+    var fiveDayForecastHumidity = document.createElement("span");
+    fiveDayForecastHumidity.classList = "";
+    fiveDayForecastHumidity.textContent = dailyFiveDayForecast.main.humidity + "  %";
+    fiveDayForecastContainer.appendChild(fiveDayForecastHumidity);
+
+    fiveDayContainer.appendChild(fiveDayForecastContainer);
+  }
+};
+
 // Function that runs when city is searched by user
 var displayWeather = function (event) {
   event.preventDefault();
   var city = searchCityInput.value.trim();
   if (city) {
     geoCallFetch(city);
+    geoFiveDayForecastFetch(city);
     cityArr.unshift({ city });
     searchCityInput.value = "";
   } else {
@@ -116,7 +158,6 @@ var displayWeather = function (event) {
 
 searchCityForm.addEventListener("submit", displayWeather);
 
-// append uv index to current weather div
 // local storage "recent searches"
 // make recent searches clickable
-// five day forecast
+// five day forecast - started fetch, need to work on getting info and appending.
