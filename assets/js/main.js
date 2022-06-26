@@ -118,7 +118,7 @@ var searchedCityUvIndex = function (uvIndex) {
 
 var FiveDayForecastInfo = function (weather) {
   fiveDayContainer.textContent = "";
-  fiveDayForecastInfo.textContent = "Five Day Forecast:";
+  fiveDayForecastInfo.textContent = "Five Day Forecast";
 
   var fiveForecastList = weather.list;
   for (var i = 5; i < fiveForecastList.length; i = i + 8) {
