@@ -50,7 +50,7 @@ var searchCityWeather = function (weather, citySearch) {
 
   var todaysDate = document.createElement("span");
   todaysDate.textContent =
-    " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
+    " (" + moment(weather.dt.value).format('MMMM Do YYYY, h:mm:ss a') + ") ";
   searchedCity.appendChild(todaysDate);
 
   var cityWeatherIcon = document.createElement("img");
