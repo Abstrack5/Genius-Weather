@@ -15,3 +15,14 @@ span.favorable{
     color:white;
 }
 
+.jumbotron {
+    /* background-color: aqua; */
+    border-bottom: 1px solid ;
+}
+
+.footer {
+    border-top: 1px solid;
+    margin-top: 2rem;
+    padding: 25px
+}
+
