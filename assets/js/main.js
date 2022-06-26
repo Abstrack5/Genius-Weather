@@ -36,10 +36,6 @@ var searchCityUvIndex = function(lat,lon){
 };
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/js
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
   searchedCity.textContent = citySearch;
