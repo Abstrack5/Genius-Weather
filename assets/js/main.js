@@ -22,18 +22,10 @@ var geoCallFetch = function(city){
     });
 };
 
+// to be used to get UV index?
+// var apiKey = "23350d22c5f5ffb342616e39dd758278"
+// var geoLatLonCall = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`
 
-var displayWeather = function(event){
-    event.preventDefault();
-    var city = searchCityInput.value.trim();
-    if(city){
-        geoCallFetch(city);
-        cityArr.unshift({city});
-        searchCityInput.value = "";
-    } else{
-        alert("Please enter a City");
-    }
-}
 
 var searchCityWeather = function (weather, citySearch) {
   searchedCityContainer.textContent = "";
@@ -64,6 +56,18 @@ var searchCityWeather = function (weather, citySearch) {
   cityWindSpeed.textContent = "Wind Speed: " + weather.wind.speed + " MPH";
   cityWindSpeed.classList = "list-group-item";
   searchedCityContainer.appendChild(cityWindSpeed);
+};
+
+var displayWeather = function(event){
+    event.preventDefault();
+    var city = searchCityInput.value.trim();
+    if(city){
+        geoCallFetch(city);
+        cityArr.unshift({city});
+        searchCityInput.value = "";
+    } else{
+        alert("Please enter a City");
+    }
 };
 
 searchCityForm.addEventListener("submit", displayWeather);
